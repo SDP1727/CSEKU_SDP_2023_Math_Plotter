@@ -1,24 +1,19 @@
 import javax.swing.*;
 
-public class gui extends JFrame {
-
-    private JTextField inputField;
-    private JButton submitButton;
-    public gui() {
-        setTitle("My Window");
-        setSize(400, 300);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLocationRelativeTo(null);
-
-        //Text Field
-        inputField = new JTextField();
-        inputField.setBounds(10, 10, 200, 30);
-        add(inputField);
-
-        setVisible(true);
-    }
-
+public class gui{
     public static void main(String[] args) {
-        gui window = new gui();
+        JFrame frame = new JFrame("Math Equation Plotter");
+        JLabel label = new JLabel("f(x) = ");
+        JPanel panel = new JPanel();
+        JTextField textField = new JTextField(40);
+        JButton submitButton = new JButton("Submit");
+
+        panel.add(label);
+        panel.add(textField);
+        panel.add(submitButton);
+        frame.add(panel);
+
+        frame.pack();
+        frame.setVisible(true);
     }
 }
