@@ -59,8 +59,13 @@ public: void setRange(int rng) {
         return 0;
     }
     int intopost(char exp[]) {
+        ftop = -1;
+        stackTop = -1;
+        postInd = -1;
+        floattop = -1;
         strcpy(expression, exp);
         //scanf("%s",expression);
+        printf("%s\n",expression);
         int i, numInd = 0;
         int len = strlen(expression);
         int unary = 1;
@@ -260,6 +265,7 @@ public: void setRange(int rng) {
             else if (post[i][0] == '+' || post[i][0] == '-' || post[i][0] == '*' || post[i][0] == '/' || post[i][0] == '^') {
                 float f1, f2, f;
                 if (floattop<1) {
+                    //return 0;
                     throw std::runtime_error("Invalid Expression.");
                 }
                 f2 = popfloat();
@@ -270,6 +276,7 @@ public: void setRange(int rng) {
         }
         val = popfloat();
         if (floattop != -1) {
+            //return 0;
             throw std::runtime_error("Invalid Expression.");
         }
         return val;
@@ -309,14 +316,10 @@ public: void setRange(int rng) {
 
     void drawFunction() {
         glColor3f(1.0, 0.0, 0.0);
+        //glLineWidth(20);
         glBegin(GL_LINE_STRIP);
         for (float x = range*-1.0; x <= range*1.0; x += 0.01) {
             float ev = evalpost(x);
-            printf("%f %f\n",x,ev);
-            printf("%s\n",post[0]);
-            printf("%s\n",post[1]);
-            printf("%s\n",post[2]);
-            printf("%s\n",post[3]);
             glVertex2f(x/range, ev/range);
         }
         glEnd();
@@ -341,6 +344,8 @@ public: void setRange(int rng) {
         gluOrtho2D(-1.0, 1.0, -1.0, 1.0);
 
         glutDisplayFunc(displayPlot);
+        glutSetOption(GLUT_ACTION_ON_WINDOW_CLOSE,
+                      GLUT_ACTION_GLUTMAINLOOP_RETURNS);
 
         glutMainLoop();
 

@@ -18,6 +18,7 @@ plot pl;
 QString str = "";
 int rng = 1;
 
+
 int main(int argc, char **argv)
 {
     QApplication app(argc, argv);
@@ -84,6 +85,8 @@ int main(int argc, char **argv)
             pl.setRange(rng);
 
             pl.startPlot(argc, argv, cstr);
+            str.clear();
+            textField->setText(str);
 
 
         });
