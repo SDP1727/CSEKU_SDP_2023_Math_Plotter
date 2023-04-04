@@ -1,6 +1,8 @@
 #include <GL/glut.h>
 #include <cmath>
 
+#define _USE_MATH_DEFINES
+
 //float ns =2;
 
 char expression[200];
@@ -12,10 +14,15 @@ int stackTop = -1;
 int postInd = -1;
 double evalstack[200];
 int floattop = -1;
+int range = 1;
 
 
 
 class plot {
+
+public: void setRange(int rng) {
+        range = rng;
+    }
 
     void pushfloat(double val) {
         floattop++;
@@ -146,6 +153,7 @@ class plot {
                     pushE[0] = '$';
                     pushE[1] = '\0';
                     push(pushE);
+                    i = i + 2;
 
                 }
                 else if (expression[i] == ')') {
@@ -207,9 +215,11 @@ class plot {
     double func(char op, double x) {
         switch (op) {
             case 's':
+                printf("Sin\n");
                 return sin(x);
                 break;
             case 'c':
+                printf("Cos\n");
                 return cos(x);
                 break;
             case 't':
@@ -266,22 +276,48 @@ class plot {
     }
 
     void drawAxes() {
-        glColor3f(0.0, 0.0, 1.0);
-        glBegin(GL_LINES);
-        // x-axis
-        glVertex2f(-1.0, 0.0);
-        glVertex2f(1.0, 0.0);
-        // y-axis
-        glVertex2f(0.0, -1.0);
-        glVertex2f(0.0, 1.0);
-        glEnd();
+
+        // Draw grid lines
+            glColor3f(0.9, 0.9, 0.9);
+            glBegin(GL_LINES);
+            for (float x = -1; x <= 1; x += 0.1) {
+                glVertex2f(x, -1.0);
+                glVertex2f(x, 1.0);
+            }
+            for (float y = -1; y <= 1; y += 0.1) {
+                glVertex2f(-1.0, y);
+                glVertex2f(1.0, y);
+            }
+            glEnd();
+            glColor3f(0.0, 0.0, 1.0);
+            glBegin(GL_LINES);
+            // x-axis
+            glVertex2f(-1.0, 0.0);
+            glVertex2f(1.0, 0.0);
+            // y-axis
+            glVertex2f(0.0, -1.0);
+            glVertex2f(0.0, 1.0);
+            glEnd();
+
+            glRasterPos2f(0.8, 0.05);
+                glutBitmapString(GLUT_BITMAP_HELVETICA_12, (const unsigned char*)"X-axis");
+
+                // Draw y-axis label
+                glRasterPos2f(0.05, 0.9);
+                glutBitmapString(GLUT_BITMAP_HELVETICA_12, (const unsigned char*)"Y-axis");
     }
 
     void drawFunction() {
         glColor3f(1.0, 0.0, 0.0);
         glBegin(GL_LINE_STRIP);
-        for (float x = -1.0; x <= 1.0; x += 0.01) {
-            glVertex2f(x, evalpost(x));
+        for (float x = range*-1.0; x <= range*1.0; x += 0.01) {
+            float ev = evalpost(x);
+            printf("%f %f\n",x,ev);
+            printf("%s\n",post[0]);
+            printf("%s\n",post[1]);
+            printf("%s\n",post[2]);
+            printf("%s\n",post[3]);
+            glVertex2f(x/range, ev/range);
         }
         glEnd();
     }
@@ -301,7 +337,6 @@ class plot {
         glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB);
         glutInitWindowSize(500, 500);
         glutCreateWindow("Function Plotter");
-
         glClearColor(1.0, 1.0, 1.0, 1.0);
         gluOrtho2D(-1.0, 1.0, -1.0, 1.0);
 
