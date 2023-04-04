@@ -1,6 +1,8 @@
 #include <GL/glut.h>
 #include <cmath>
 
+#define _USE_MATH_DEFINES
+
 //float ns =2;
 
 char expression[200];
@@ -146,6 +148,7 @@ class plot {
                     pushE[0] = '$';
                     pushE[1] = '\0';
                     push(pushE);
+                    i = i + 2;
 
                 }
                 else if (expression[i] == ')') {
@@ -207,9 +210,11 @@ class plot {
     double func(char op, double x) {
         switch (op) {
             case 's':
+                printf("Sin\n");
                 return sin(x);
                 break;
             case 'c':
+                printf("Cos\n");
                 return cos(x);
                 break;
             case 't':
@@ -280,8 +285,14 @@ class plot {
     void drawFunction() {
         glColor3f(1.0, 0.0, 0.0);
         glBegin(GL_LINE_STRIP);
-        for (float x = -1.0; x <= 1.0; x += 0.01) {
-            glVertex2f(x, evalpost(x));
+        for (float x = -3.0; x <= 3.0; x += 0.01) {
+            float ev = evalpost(x);
+            printf("%f %f\n",x,ev);
+            printf("%s\n",post[0]);
+            printf("%s\n",post[1]);
+            printf("%s\n",post[2]);
+            printf("%s\n",post[3]);
+            glVertex2f(x/3, ev/3);
         }
         glEnd();
     }
@@ -301,7 +312,6 @@ class plot {
         glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB);
         glutInitWindowSize(500, 500);
         glutCreateWindow("Function Plotter");
-
         glClearColor(1.0, 1.0, 1.0, 1.0);
         gluOrtho2D(-1.0, 1.0, -1.0, 1.0);
 
