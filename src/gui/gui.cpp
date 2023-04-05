@@ -200,6 +200,10 @@ int main(int argc, char **argv)
             str.append("tan");
             textField->setText(str);
         });
+        QObject::connect(logarithm, &QPushButton::clicked,[&](){
+            str.append("log");
+            textField->setText(str);
+        });
         QObject::connect(clear, &QPushButton::clicked,[&](){
             str.clear();
             textField->setText(str);
