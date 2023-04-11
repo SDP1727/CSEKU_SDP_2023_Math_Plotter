@@ -89,10 +89,15 @@ class GUI{
                 const char* const_cstr = str.toStdString().c_str();
                 char cstr[20];
                 strcpy(cstr,const_cstr);
+                pl.intopost(cstr);
+                if(pl.evalpost(1) == -99999)
+                {
+                    str = "Invalid Expression!";
+                } else {
                 pl.setRange(rng);
 
                 pl.startPlot(argc, argv, cstr);
-                str.clear();
+                str.clear();}
                 textField->setText(str);
 
 
@@ -211,6 +216,9 @@ class GUI{
                 if(str.endsWith("log")||str.endsWith("sin")||str.endsWith("cos")||str.endsWith("tan"))
                 {
                     str.chop(3);
+                }
+                else if(str.endsWith("!")) {
+                    str.clear();
                 }
                 else {
                     str.chop(1);
