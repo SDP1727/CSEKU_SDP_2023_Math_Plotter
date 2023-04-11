@@ -1,5 +1,7 @@
 #include <GL/glut.h>
 #include <cmath>
+#include<cstring>
+#include<cstdio>
 
 #define _USE_MATH_DEFINES
 
