@@ -208,7 +208,13 @@ class GUI{
                 textField->setText(str);
             });
             QObject::connect(clear, &QPushButton::clicked,[&](){
-                str.clear();
+                if(str.endsWith("log")||str.endsWith("sin")||str.endsWith("cos")||str.endsWith("tan"))
+                {
+                    str.chop(3);
+                }
+                else {
+                    str.chop(1);
+                }
                 textField->setText(str);
             });
             QObject::connect(incr, &QPushButton::clicked,[&](){
