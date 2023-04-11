@@ -5,3 +5,5 @@ A simple mathematical equation plotter using OpenGL
 - Plot mathametical function  
 	- Straight Line Function
 	- Trigonometrical  Function
+	- Logarithmic Function
+	- Exponential Function
