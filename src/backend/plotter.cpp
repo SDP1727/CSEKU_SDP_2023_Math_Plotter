@@ -1,5 +1,7 @@
 #include <GL/glut.h>
 #include <cmath>
+#include<cstring>
+#include<cstdio>
 
 #define _USE_MATH_DEFINES
 
@@ -265,8 +267,8 @@ public: void setRange(int rng) {
             else if (post[i][0] == '+' || post[i][0] == '-' || post[i][0] == '*' || post[i][0] == '/' || post[i][0] == '^') {
                 float f1, f2, f;
                 if (floattop<1) {
-                    //return 0;
-                    throw std::runtime_error("Invalid Expression.");
+                    return -99999;
+                    //throw std::runtime_error("Invalid Expression.");
                 }
                 f2 = popfloat();
                 f1 = popfloat();
@@ -276,8 +278,8 @@ public: void setRange(int rng) {
         }
         val = popfloat();
         if (floattop != -1) {
-            //return 0;
-            throw std::runtime_error("Invalid Expression.");
+            return -99999;
+            //throw std::runtime_error("Invalid Expression.");
         }
         return val;
     }

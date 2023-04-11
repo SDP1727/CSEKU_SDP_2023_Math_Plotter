@@ -52,8 +52,8 @@ OBJECTS_DIR   = ./
 
 ####### Files
 
-SOURCES       = ../src/gui/gui.cpp 
-OBJECTS       = gui.o
+SOURCES       = ../src/Main.cpp 
+OBJECTS       = Main.o
 DIST          = /../lib64/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib64/qt5/mkspecs/common/unix.conf \
 		/usr/lib64/qt5/mkspecs/common/linux.conf \
@@ -111,6 +111,7 @@ DIST          = /../lib64/qt5/mkspecs/features/spec_pre.prf \
 		/../lib64/qt5/mkspecs/features/qt_config.prf \
 		/../lib64/qt5/mkspecs/linux-g++/qmake.conf \
 		/../lib64/qt5/mkspecs/features/spec_post.prf \
+		../src/.qmake.stash \
 		/../lib64/qt5/mkspecs/features/exclusive_builds.prf \
 		/../lib64/qt5/mkspecs/features/toolchain.prf \
 		/../lib64/qt5/mkspecs/features/default_pre.prf \
@@ -131,7 +132,7 @@ DIST          = /../lib64/qt5/mkspecs/features/spec_pre.prf \
 		/../lib64/qt5/mkspecs/features/exceptions.prf \
 		/../lib64/qt5/mkspecs/features/yacc.prf \
 		/../lib64/qt5/mkspecs/features/lex.prf \
-		../src/src.pro  ../src/gui/gui.cpp
+		../src/src.pro  ../src/Main.cpp
 QMAKE_TARGET  = Test
 DESTDIR       = 
 TARGET        = Test
@@ -200,6 +201,7 @@ Makefile: ../src/src.pro /../lib64/qt5/mkspecs/linux-g++/qmake.conf /../lib64/qt
 		/../lib64/qt5/mkspecs/features/qt_config.prf \
 		/../lib64/qt5/mkspecs/linux-g++/qmake.conf \
 		/../lib64/qt5/mkspecs/features/spec_post.prf \
+		.qmake.stash \
 		/../lib64/qt5/mkspecs/features/exclusive_builds.prf \
 		/../lib64/qt5/mkspecs/features/toolchain.prf \
 		/../lib64/qt5/mkspecs/features/default_pre.prf \
@@ -279,6 +281,7 @@ Makefile: ../src/src.pro /../lib64/qt5/mkspecs/linux-g++/qmake.conf /../lib64/qt
 /../lib64/qt5/mkspecs/features/qt_config.prf:
 /../lib64/qt5/mkspecs/linux-g++/qmake.conf:
 /../lib64/qt5/mkspecs/features/spec_post.prf:
+.qmake.stash:
 /../lib64/qt5/mkspecs/features/exclusive_builds.prf:
 /../lib64/qt5/mkspecs/features/toolchain.prf:
 /../lib64/qt5/mkspecs/features/default_pre.prf:
@@ -315,7 +318,7 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents /../lib64/qt5/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../src/gui/gui.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../src/Main.cpp $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -365,8 +368,9 @@ compiler_clean: compiler_moc_predefs_clean
 
 ####### Compile
 
-gui.o: ../src/gui/gui.cpp ../src/backend/plotter.cpp
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o gui.o ../src/gui/gui.cpp
+Main.o: ../src/Main.cpp ../src/gui/gui.cpp \
+		../src/backend/plotter.cpp
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Main.o ../src/Main.cpp
 
 ####### Install
 
