@@ -97,7 +97,7 @@ class GUI{
                 pl.setRange(rng);
 
                 pl.startPlot(argc, argv, cstr);
-                str.clear();}
+                }
                 textField->setText(str);
 
 
@@ -210,6 +210,10 @@ class GUI{
 
             QObject::connect(tangent, &QPushButton::clicked,[&](){
                 str.append("tan");
+                textField->setText(str);
+            });
+            QObject::connect(logarithm, &QPushButton::clicked,[&](){
+                str.append("log");
                 textField->setText(str);
             });
             QObject::connect(clear, &QPushButton::clicked,[&](){
